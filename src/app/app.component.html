@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
-<body>  
+<body>
   <app-header></app-header>
   <div [ngSwitch]="view">
-    <div *ngSwitchDefault="'home'">
+    <div *ngSwitchCase="'home'">
       <app-home (clickedBeginButton) ="onBeginButtonClicked($event)"></app-home>
     </div>
     <div *ngSwitchCase="'captcha'">

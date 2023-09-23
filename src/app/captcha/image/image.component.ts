@@ -58,7 +58,8 @@ export class ImageComponent {
     );
   }
   onImageClicked(imagePath: string) {
-    this.clickedImagePath = imagePath;
+   // set answer to imagePath
+    this.imageFormGroup.patchValue({ answer: imagePath });
     console.log(imagePath);
   }
 

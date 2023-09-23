@@ -2,21 +2,16 @@
   <div class="main-content responsive-wrapper">
     <article class="widget">
       <h2>Captcha #3: Image</h2>
-      <p>Click the picture with Angular logo:</p>
-      <div class="grid-container">
-        <form [formGroup]="imageFormGroup">
+      <p>Click the picture that has an Angular logo:</p>
+      <form [formGroup]="imageFormGroup">
+        <div class="grid-container">
           <div class="grid-item" *ngFor="let imagePath of imagePaths">
             <img [src]="imagePath" [alt]="'Image ' + (imagePaths.indexOf(imagePath) + 1)" (click)="onImageClicked(imagePath)">
           </div>
           <button type="submit" [disabled]="!imageFormGroup.valid" class="btn btn-primary">Submit</button>
           <button class="button-9">Next</button>
-        </form>
-      </div>
-      <p></p>
-      <pre>
-    {{imageFormGroup.value|json}}
-        {{imageFormGroup.valid|json}}
-    </pre>
+        </div>
+      </form>
     </article>
   </div>
 </main>
