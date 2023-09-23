@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angul';
+
+  view: string = '';
+
+
+  onBeginButtonClicked(value: string){
+    this.view = value;
+    console.log(value);
+  }
 }

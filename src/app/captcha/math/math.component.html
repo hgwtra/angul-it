@@ -1,0 +1,55 @@
+<!-- Math Captcha -->
+<main class="main">
+	<div class="main-content responsive-wrapper">
+		<article class="widget">
+			<h2>Captcha #1: Math</h2>
+			<p>You'll be presented with a simple math problem. Solve and type your answer in the box below.</p>
+			<p>Click submit button to check your answer. Good luck!</p>
+
+			<div class="container">
+				<div class="row">
+				 <div class="col-md-6">
+				  <form [formGroup]="mathFormGroup">
+				   <div class="form-group">
+					<label for="firstNumber">First Number</label>
+					<input type="number" class="form-control"
+						 formControlName="firstNumber"
+						 id="firstNumber">
+				   </div>
+					<div class="form-group">
+					 <label for="secondNumber">Second Number</label>
+					 <input type="number" class="form-control"
+						 formControlName="secondNumber"
+						 id="secondNumber" >
+			   
+				   </div>
+					 <div class="form-group">
+					  <label for="answer">Answer</label>
+					  <input type="number" class="form-control"
+						 formControlName="answer"
+						 id="answer" >
+				   </div>
+					  <button type="submit" [disabled]="!mathFormGroup.valid"class="btn btn-primary">Submit</button>
+				  </form>
+				 </div>
+				</div>
+			   </div>
+			
+            <!-- <div class="captcha">
+				<canvas #canvas width="130" height="50"></canvas>
+				<form  class="flex-form">
+					<input type="search" placeholder="Enter your answer"  #input>
+					<input type="submit" value="Submit">
+				</form>
+				<input type="number" (input)="change(input.value)" #input> 
+				<button class="button-9">
+					<i class="fa-sharp fa-solid fa-rotate-right"></i> 
+					Refresh
+				</button>
+			</div> -->
+			
+			<p></p>
+            <!-- <button class="button-9">Next</button> -->
+		</article>
+    </div>  
+</main>
