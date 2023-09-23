@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-image',
@@ -18,9 +19,14 @@ export class ImageComponent {
     "./assets/images/image9.jpg",
   ];
 
+  correctImagePath: string = "./assets/images/answer.jpg";
+  clickedImagePath: string ="";
+
+  imageFormGroup: FormGroup;
   constructor() {
     // Shuffle the imagePaths array randomly
-    this.shuffleArray(this.imagePaths);
+    this.initForm();
+    //this.shuffleArray(this.imagePaths);
   }
 
   // Function to shuffle an array randomly
@@ -39,7 +45,29 @@ export class ImageComponent {
     return array;
   }
 
+  initForm() {
+    this.imageFormGroup = new FormGroup(
+      {
+        correctImagePath: new FormControl(this.correctImagePath, [
+          Validators.required
+        ]),
+        answer: new FormControl("")
+      },
+
+      [this.answerValidator] // Bind the validator to the component instance
+    );
+  }
   onImageClicked(imagePath: string) {
+    this.clickedImagePath = imagePath;
     console.log(imagePath);
   }
+
+  answerValidator(form: AbstractControl) {
+    const { correctImagePath, answer } = form.value;
+    if (correctImagePath === answer) {
+      return null; // Valid if the clicked image matches the expected answer
+    }
+    return { incorrectAnswer: true }; // Invalid if it doesn't match
+  }
+
 }

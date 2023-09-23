@@ -4,11 +4,19 @@
       <h2>Captcha #3: Image</h2>
       <p>Click the picture with Angular logo:</p>
       <div class="grid-container">
-        <div class="grid-item" *ngFor="let imagePath of imagePaths">
-          <img [src]="imagePath" [alt]="'Image ' + (imagePaths.indexOf(imagePath) + 1)" (click)="onImageClicked(imagePath)">
-        </div>
+        <form [formGroup]="imageFormGroup">
+          <div class="grid-item" *ngFor="let imagePath of imagePaths">
+            <img [src]="imagePath" [alt]="'Image ' + (imagePaths.indexOf(imagePath) + 1)" (click)="onImageClicked(imagePath)">
+          </div>
+          <button type="submit" [disabled]="!imageFormGroup.valid" class="btn btn-primary">Submit</button>
+          <button class="button-9">Next</button>
+        </form>
       </div>
       <p></p>
+      <pre>
+    {{imageFormGroup.value|json}}
+        {{imageFormGroup.valid|json}}
+    </pre>
     </article>
   </div>
 </main>
