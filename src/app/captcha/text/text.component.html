@@ -1,3 +1,5 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 <main class="main">
   <div class="main-content responsive-wrapper">
     <article class="widget">
@@ -6,20 +8,40 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6">
-            <form [formGroup]="textFormGroup">
-              <div class="form-group">
-                <p
+            <form [formGroup]="textFormGroup" (ngSubmit)="onSubmit()">
+              <div class="textRandomizer">
+                <canvas #canvas width="230" height="60">
                   class="form-control-static">
                   {{ textFormGroup.get('randomAlphanumericText').value }}
-                </p>
+                </canvas>
+                <button type="button" class="button-re" (click)="onRefreshButtonClicked()">
+                  <i class="fa-sharp fa-solid fa-rotate-right"></i>
+                </button>	
               </div>
-              <div class="form-group">
+
+              <div class="form-input">
                 <input type="text" class="form-control"
                        formControlName="answer"
-                       id="answer" >
+                       id="answer" 
+                       [maxlength]="8"
+                       [disabled]="textValidated === false"
+							          (keydown)="preventEnter($event)">
+                <button type="submit" [disabled]="isSubmitted" class="btn btn-primary">Submit</button>
               </div>
-              <button type="submit" [disabled]="!textFormGroup.valid"class="btn btn-primary">Submit</button>
-              <button class="button-9">Next</button>
+
+              <div *ngIf="textValidated === false">
+                <p> Incorrect! Try again... </p>
+                <button class="button-9" (click)="retry()">Try again</button> 
+              </div>
+                
+              <div *ngIf="textValidated === true">
+              <p> Correct! Let's move on </p>
+              <div class="buttons">
+                <button class="button-9" (click)="retry()">Redo Challenge</button> 
+                <button class="button-9">Next</button> 
+              </div>
+              </div>
+
             </form>
           </div>
         </div>

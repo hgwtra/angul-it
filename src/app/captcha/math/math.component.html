@@ -27,7 +27,7 @@
 							[maxlength]="3"
 							[disabled]="mathValidated === false"
 							(keydown)="preventEnter($event)">
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="submit" [disabled]="isSubmitted" class="btn btn-primary">Submit</button>
 					</div>
 
 					<div *ngIf="mathValidated === false">

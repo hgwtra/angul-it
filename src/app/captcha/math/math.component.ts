@@ -16,6 +16,7 @@ export class MathComponent  {
   @ViewChild('canvas') canvas: ElementRef;
 
   mathValidated: boolean | null = null;  // true = correct, false = incorrect, null = not yet validated
+  isSubmitted = false;
 
   mathFormGroup: FormGroup;
   //Form validation
@@ -95,6 +96,7 @@ preventEnter(event: KeyboardEvent): void {
 }
   
 onSubmit() {
+  this.isSubmitted = true;
   if (this.mathFormGroup.valid && (!this.mathFormGroup.errors || !this.mathFormGroup.errors['math'])) {
     this.mathValidated = true;
     this.mathFormGroup.get('answer').disable();
@@ -108,11 +110,13 @@ onSubmit() {
 retry() {
   this.mathValidated = null;
   this.onRefreshButtonClicked();
+  this.isSubmitted = false;
   this.mathFormGroup.get('answer').enable()
 }
 
 onRefreshButtonClicked() {
   this.mathValidated = null;
+  this.isSubmitted = false;
   this.initForm();
   this.drawEquation();
   this.mathFormGroup.get('answer').enable(); // make sure the control is re-enabled here
