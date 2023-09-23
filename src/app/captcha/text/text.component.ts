@@ -11,7 +11,6 @@ export class TextComponent {
   textValidated: boolean | null = null;  // true = correct, false = incorrect, null = not yet validated
   isSubmitted = false;
   nextCaptchaView: string = '';
-  backCaptchaView: string = 'math';
   @Output()
   clickedNextButton: EventEmitter<string> = new EventEmitter<string>();
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -7,9 +7,11 @@ import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/form
   styleUrls: ['./image.component.css']
 })
 export class ImageComponent {
-  imageValidated: boolean | null = null; 
+  imageValidated: boolean | null = null;
   isSubmitted = false;
-
+  nextCaptchaView: string = '';
+  @Output()
+  clickedNextButton: EventEmitter<string> = new EventEmitter<string>();
   imagePaths: string[] = [
     "./assets/images/answer.jpg",
     "./assets/images/image2.jpg",
@@ -23,7 +25,6 @@ export class ImageComponent {
   ];
 
   correctImagePath: string = "./assets/images/answer.jpg";
-  clickedImagePath: string ="";
 
   imageFormGroup: FormGroup;
   constructor() {
@@ -85,15 +86,15 @@ export class ImageComponent {
 
   onSubmit() {
     this.isSubmitted = true;
-    
+
     if (this.imageFormGroup.valid && !this.imageFormGroup.hasError('math')) {
         this.imageValidated = true;
     } else {
         this.imageValidated = false;
     }
-    
+
     // Disable the answer input after form submission
-    this.imageFormGroup.get('answer').disable(); 
+    this.imageFormGroup.get('answer').disable();
   }
 
   retry() {
@@ -104,5 +105,8 @@ export class ImageComponent {
     this.isSubmitted = false;
     this.imageFormGroup.get('answer').enable()
   }
-
+  onBackClicked() {
+    this.nextCaptchaView = 'text';
+    this.clickedNextButton.emit(this.nextCaptchaView);
+  }
 }

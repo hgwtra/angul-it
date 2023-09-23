@@ -2,35 +2,35 @@
   <div class="main-content responsive-wrapper">
     <article class="widget">
       <h2>Captcha #3: Image</h2>
-      <p>Click the picture that has an Angular logo.</p>
-      <p>Click submit button to check your answer. Good luck!</p>
+      <p>Click the picture that has an Angular logo and click submit.</p>
       <form [formGroup]="imageFormGroup" (ngSubmit)="onSubmit()">
         <div class="grid-container">
           <div class="grid-item"
               *ngFor="let imagePath of imagePaths"
               [class.selected]="imagePath === selectedImage"
               style="cursor: pointer;">
-            <img [src]="imagePath" 
-                  [alt]="'Image ' + (imagePaths.indexOf(imagePath) + 1)" 
+            <img [src]="imagePath"
+                  [alt]="'Image ' + (imagePaths.indexOf(imagePath) + 1)"
                   (click)="onImageClicked(imagePath)"
                   >
           </div>
         </div>
         <div class="submit-button-container">
           <button type="submit" [disabled]="isSubmitted || !selectedImage"  class="btn btn-primary">Submit</button>
-        </div>        
-        
+        </div>
+        <button class="btn btn-primary" (click)="onBackClicked()">Back</button>
+
 
         <div *ngIf="imageValidated === false">
             <p> Incorrect! Try again... </p>
-            <button class="button-9" (click)="retry()">Try again</button> 
+            <button class="button-9" (click)="retry()">Try again</button>
           </div>
-            
+
           <div *ngIf="imageValidated === true">
           <p> Correct! </p>
           <div class="buttons">
-            <button class="button-9" (click)="retry()">Redo Challenge</button> 
-            <button class="button-9">Result</button> 
+            <button class="button-9" (click)="retry()">Redo Challenge</button>
+            <button class="button-9">Result</button>
           </div>
         </div>
       </form>
