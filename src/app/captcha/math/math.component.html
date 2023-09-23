@@ -5,25 +5,24 @@
 	<div class="main-content responsive-wrapper">
 		<article class="widget">
 			<h2>Captcha #1: Math</h2>
-			<p>You'll be presented with a simple math problem. Solve and type your answer in the box below.</p>
-			<p>Click submit button to check your answer. Good luck!</p>
+			<p> Solve this very difficult math problem: </p>
 
 			<div class="container">
 				<form [formGroup]="mathFormGroup" (ngSubmit)="onSubmit()">
 					<div class="equation">
-						<canvas #canvas width="130" height="60" 
+						<canvas #canvas width="130" height="60"
 						class="form-control-static">
 						{{ mathFormGroup.get('firstNumber').value }} +  {{ mathFormGroup.get('secondNumber').value }}
 						</canvas>
 						<button type="button" class="button-re" (click)="onRefreshButtonClicked()">
 							<i class="fa-sharp fa-solid fa-rotate-right"></i>
-						</button>						
+						</button>
 					</div>
 
 					<div class="form-input">
 						<input type="text" class="form-control"
 							formControlName="answer"
-							id="answer" 
+							id="answer"
 							[maxlength]="3"
 							[disabled]="mathValidated === false"
 							(keydown)="preventEnter($event)">
@@ -32,21 +31,21 @@
 
 					<div *ngIf="mathValidated === false">
 						<p> Incorrect! Try again... </p>
-						<button class="button-9" (click)="retry()">Try again</button> 
+						<button class="button-9" (click)="retry()">Try again</button>
 					</div>
-					  
+
 					<div *ngIf="mathValidated === true">
 					<p> Correct! Let's move on </p>
 					<div class="buttons">
-						<button class="button-9" (click)="retry()">Redo Challenge</button> 
-						<button class="button-9">Next</button> 
+						<button class="button-9" (click)="retry()">Redo Challenge</button>
+						<button class="button-9" (click) = "onNextClicked()">Next</button>
 					</div>
 					</div>
 				</form>
 			</div>
 
 
-           
+
 		</article>
     </div>
 </main>

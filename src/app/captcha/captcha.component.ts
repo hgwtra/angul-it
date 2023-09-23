@@ -5,6 +5,12 @@ import { Component } from '@angular/core';
   templateUrl: './captcha.component.html',
   styleUrls: ['./captcha.component.css']
 })
-export class CaptchaComponent {
 
+export class CaptchaComponent {
+  captchaView: string = 'math';
+
+  onNextClicked(value: string){
+    this.captchaView = value;
+    console.log(value);
+  }
 }

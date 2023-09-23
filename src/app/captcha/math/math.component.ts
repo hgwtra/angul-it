@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import { Component, ViewChild, ElementRef, EventEmitter, Output} from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -9,7 +9,7 @@ import {
 @Component({
   selector: 'app-math',
   templateUrl: './math.component.html',
-  styleUrls: ['./math.component.css'], 
+  styleUrls: ['./math.component.css'],
 })
 export class MathComponent  {
   //Canvas
@@ -17,8 +17,11 @@ export class MathComponent  {
 
   mathValidated: boolean | null = null;  // true = correct, false = incorrect, null = not yet validated
   isSubmitted = false;
-
   mathFormGroup: FormGroup;
+  captchaView: string = 'math';
+
+  @Output()
+  clickedNextButton: EventEmitter<string> = new EventEmitter<string>();
   //Form validation
   constructor() {
     this.initForm();
@@ -94,7 +97,7 @@ preventEnter(event: KeyboardEvent): void {
     ctx.font = '35px QuickSand';
     ctx.fillText(`${this.mathFormGroup.get('firstNumber').value} ${this.mathFormGroup.get('operator').value} ${this.mathFormGroup.get('secondNumber').value}`, 10, 30);
 }
-  
+
 onSubmit() {
   this.isSubmitted = true;
   if (this.mathFormGroup.valid && (!this.mathFormGroup.errors || !this.mathFormGroup.errors['math'])) {
@@ -102,8 +105,8 @@ onSubmit() {
     this.mathFormGroup.get('answer').disable();
   } else if (this.mathFormGroup.errors && this.mathFormGroup.errors['math']) {
     this.mathValidated = false;
-    this.mathFormGroup.get('answer').disable(); 
-  }  
+    this.mathFormGroup.get('answer').disable();
+  }
 }
 
 
@@ -121,5 +124,9 @@ onRefreshButtonClicked() {
   this.drawEquation();
   this.mathFormGroup.get('answer').enable(); // make sure the control is re-enabled here
 }
-  
+
+  onNextClicked() {
+    this.captchaView = 'text';
+    this.clickedNextButton.emit(this.captchaView);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import {Component, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -10,6 +10,10 @@ export class TextComponent {
 
   textValidated: boolean | null = null;  // true = correct, false = incorrect, null = not yet validated
   isSubmitted = false;
+  nextCaptchaView: string = '';
+  backCaptchaView: string = 'math';
+  @Output()
+  clickedNextButton: EventEmitter<string> = new EventEmitter<string>();
 
   //Canvas
   @ViewChild('canvas') canvas: ElementRef;
@@ -69,7 +73,7 @@ export class TextComponent {
   ngAfterViewInit() {
     this.drawText();
   }
-  
+
   drawText() {
     const ctx: CanvasRenderingContext2D = this.canvas.nativeElement.getContext('2d');
     ctx.clearRect(0, 0, this.canvas.nativeElement.width, this.canvas.nativeElement.height);
@@ -82,7 +86,7 @@ export class TextComponent {
     // Draw the text with the sine wave effect
     for (let i = 0; i < text.length; i++) {
         const char = text[i];
-        const offsetY = 10 * Math.sin(i);  
+        const offsetY = 10 * Math.sin(i);
         const y = 40 + offsetY;
         ctx.fillText(char, currentX, y);
         currentX += ctx.measureText(char).width;
@@ -111,18 +115,18 @@ export class TextComponent {
 
   onSubmit() {
     this.isSubmitted = true;
-    
+
     if (this.textFormGroup.valid && !this.textFormGroup.hasError('math')) {
         this.textValidated = true;
     } else {
         this.textValidated = false;
     }
-    
+
     // Disable the answer input after form submission
-    this.textFormGroup.get('answer').disable(); 
+    this.textFormGroup.get('answer').disable();
   }
 
-  
+
   onRefreshButtonClicked() {
     this.initForm();
     this.drawText();
@@ -134,6 +138,17 @@ export class TextComponent {
     this.onRefreshButtonClicked();
     this.isSubmitted = false;
     this.textFormGroup.get('answer').enable()
+  }
+
+
+  onNextClicked() {
+    this.nextCaptchaView = 'image';
+    this.clickedNextButton.emit(this.nextCaptchaView);
+  }
+
+  onBackClicked() {
+    this.nextCaptchaView = 'math';
+    this.clickedNextButton.emit(this.nextCaptchaView);
   }
 
 }

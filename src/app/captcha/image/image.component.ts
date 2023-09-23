@@ -26,7 +26,7 @@ export class ImageComponent {
   constructor() {
     // Shuffle the imagePaths array randomly
     this.initForm();
-    //this.shuffleArray(this.imagePaths);
+    this.shuffleArray(this.imagePaths);
   }
 
   // Function to shuffle an array randomly

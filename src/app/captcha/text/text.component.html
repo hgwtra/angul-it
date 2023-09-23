@@ -16,29 +16,31 @@
                 </canvas>
                 <button type="button" class="button-re" (click)="onRefreshButtonClicked()">
                   <i class="fa-sharp fa-solid fa-rotate-right"></i>
-                </button>	
+                </button>
               </div>
 
               <div class="form-input">
                 <input type="text" class="form-control"
                        formControlName="answer"
-                       id="answer" 
+                       id="answer"
                        [maxlength]="8"
                        [disabled]="textValidated === false"
 							          (keydown)="preventEnter($event)">
+
                 <button type="submit" [disabled]="isSubmitted" class="btn btn-primary">Submit</button>
               </div>
+              <button class="btn btn-primary" (click)="onBackClicked()">Back</button>
 
               <div *ngIf="textValidated === false">
                 <p> Incorrect! Try again... </p>
-                <button class="button-9" (click)="retry()">Try again</button> 
+                <button class="button-9" (click)="retry()">Try again</button>
               </div>
-                
+
               <div *ngIf="textValidated === true">
               <p> Correct! Let's move on </p>
               <div class="buttons">
-                <button class="button-9" (click)="retry()">Redo Challenge</button> 
-                <button class="button-9">Next</button> 
+                <button class="button-9" (click)="retry()">Redo Challenge</button>
+                <button class="button-9" (click)="onNextClicked()">Next</button>
               </div>
               </div>
 
