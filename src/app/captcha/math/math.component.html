@@ -5,7 +5,8 @@
 	<div class="main-content responsive-wrapper">
 		<article class="widget">
 			<h2>Captcha #1: Math</h2>
-			<p> Solve this very difficult math problem: </p>
+			<p>Solve and type your answer in the box below.</p>
+			<p>Click submit button to check your answer. Good luck!</p>
 
 			<div class="container">
 				<form [formGroup]="mathFormGroup" (ngSubmit)="onSubmit()">
@@ -26,7 +27,7 @@
 							[maxlength]="3"
 							[disabled]="mathValidated === false"
 							(keydown)="preventEnter($event)">
-						<button type="submit" [disabled]="isSubmitted" class="btn btn-primary">Submit</button>
+						<button type="submit" [disabled]="isSubmitted || !mathFormGroup.get('answer').value" class="btn btn-primary">Submit</button>
 					</div>
 
 					<div *ngIf="mathValidated === false">

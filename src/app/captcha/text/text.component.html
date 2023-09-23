@@ -4,7 +4,8 @@
   <div class="main-content responsive-wrapper">
     <article class="widget">
       <h2>Captcha #2: Text</h2>
-      <p>Enter the characters you see:</p>
+      <p>Enter the characters you see.</p>
+      <p>Click submit button to check your answer. Good luck!</p>
       <div class="container">
         <div class="row">
           <div class="col-md-6">
@@ -26,8 +27,7 @@
                        [maxlength]="8"
                        [disabled]="textValidated === false"
 							          (keydown)="preventEnter($event)">
-
-                <button type="submit" [disabled]="isSubmitted" class="btn btn-primary">Submit</button>
+                <button type="submit" [disabled]="isSubmitted || !textFormGroup.get('answer').value" class="btn btn-primary">Submit</button>
               </div>
               <button class="btn btn-primary" (click)="onBackClicked()">Back</button>
 

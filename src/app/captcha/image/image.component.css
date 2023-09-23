@@ -1,16 +1,80 @@
 .grid-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px; /* Adjust the gap between images */
+  grid-gap: 10px; 
+  border-radius: 6px;
+  margin-bottom: 30px;
 }
 
 .grid-item {
-  text-align: center;
-
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #cccccc;
+  padding: 10px;
+  border-radius: 6px;
 }
 
 .grid-item img {
-  max-width: 100%;
-  height: auto;
+  width: 100px; 
+  height: 100px; 
+  object-fit: cover; 
+}
+
+.selected {
+  border-color: #28a745;
+}
+
+button[type="submit"] {
+  font-family: "Quicksand", sans-serif;
+  border-radius: 6px;
+  /* background: green;
+  border: 1px solid green; */
+  color: #fff;
+  padding: 0 30px;
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  align-content: center;
+  height: 55px;
+  background-color: #28a745;
+  color: #fff;
+  font-size: medium;
+}
+
+.btn-primary:disabled {
+  background-color: #b5b5b5;
+  cursor: not-allowed;
+}
+
+.btn.valid {
+  background-color: #28a745; /* Green color */
+  color: #fff;
+}
+
+.buttons {
+  display: flex;
+  z-index: 5; 
+}
+
+.buttons > button:not(:last-child) {
+  margin-right: 10px;  /* Adds 10px of space to the right of every button except the last one. */
+}
+
+
+.submit-button-container {
+  display: flex;
+  justify-content: center;
 }

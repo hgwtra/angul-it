@@ -168,3 +168,7 @@
   .buttons > button:not(:last-child) {
     margin-right: 10px;  /* Adds 10px of space to the right of every button except the last one. */
   }
+
+  img.clickable {
+    cursor: pointer;
+}

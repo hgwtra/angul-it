@@ -7,13 +7,14 @@
 </head>
 <body>
   <app-header></app-header>
-  <div [ngSwitch]="view">
+  <!-- <div [ngSwitch]="view">
     <div *ngSwitchCase="'home'">
       <app-home (clickedBeginButton) ="onBeginButtonClicked($event)"></app-home>
     </div>
     <div *ngSwitchCase="'captcha'">
       <app-captcha></app-captcha>
     </div>
-  </div>
+  </div> -->
+  <app-result></app-result>
 </body>
 </html>

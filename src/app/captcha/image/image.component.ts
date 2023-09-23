@@ -7,6 +7,9 @@ import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/form
   styleUrls: ['./image.component.css']
 })
 export class ImageComponent {
+  imageValidated: boolean | null = null; 
+  isSubmitted = false;
+
   imagePaths: string[] = [
     "./assets/images/answer.jpg",
     "./assets/images/image2.jpg",
@@ -58,10 +61,17 @@ export class ImageComponent {
     );
   }
   onImageClicked(imagePath: string) {
-   // set answer to imagePath
-    this.imageFormGroup.patchValue({ answer: imagePath });
-    console.log(imagePath);
-  }
+    // If the clicked image is already selected, deselect it; otherwise, select the clicked image
+    if (this.selectedImage === imagePath) {
+        this.selectedImage = null;
+        this.imageFormGroup.patchValue({ answer: "" });
+    } else {
+        this.imageFormGroup.patchValue({ answer: imagePath });
+        this.selectedImage = imagePath;
+    }
+    console.log(this.selectedImage);
+}
+
 
   answerValidator(form: AbstractControl) {
     const { correctImagePath, answer } = form.value;
@@ -69,6 +79,30 @@ export class ImageComponent {
       return null; // Valid if the clicked image matches the expected answer
     }
     return { incorrectAnswer: true }; // Invalid if it doesn't match
+  }
+
+  selectedImage: string | null = null;
+
+  onSubmit() {
+    this.isSubmitted = true;
+    
+    if (this.imageFormGroup.valid && !this.imageFormGroup.hasError('math')) {
+        this.imageValidated = true;
+    } else {
+        this.imageValidated = false;
+    }
+    
+    // Disable the answer input after form submission
+    this.imageFormGroup.get('answer').disable(); 
+  }
+
+  retry() {
+    this.imageValidated = null;
+    this.initForm();
+    this.selectedImage = null;
+    this.shuffleArray(this.imagePaths);
+    this.isSubmitted = false;
+    this.imageFormGroup.get('answer').enable()
   }
 
 }
