@@ -3,7 +3,15 @@
 <main class="main">
   <div class="main-content responsive-wrapper">
     <article class="widget">
-      <h2>Captcha #2: Text</h2>
+      <div class="captchaTitle">
+				<h2>Captcha #2: Text</h2>
+				<div class="progress">
+					<button type="button" class="button-back" (click)="onBackClicked()">
+						<i class="fa-solid fa-arrow-left"></i>
+					</button>
+					<h2>2/3</h2>
+				</div>
+			</div>
       <p>Enter the characters you see and click submit.</p>
       <div class="container">
         <div class="row">
@@ -28,8 +36,6 @@
 							          (keydown)="preventEnter($event)">
                 <button type="submit" [disabled]="isSubmitted || !textFormGroup.get('answer').value" class="btn btn-primary">Submit</button>
               </div>
-              <button class="btn btn-primary" (click)="onBackClicked()">Back</button>
-
               <div *ngIf="textValidated === false">
                 <p> Incorrect! Try again... </p>
                 <button class="button-9" (click)="retry()">Try again</button>

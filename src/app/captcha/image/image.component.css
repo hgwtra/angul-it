@@ -78,3 +78,47 @@ button[type="submit"] {
   display: flex;
   justify-content: center;
 }
+
+.captchaTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* This ensures the items are vertically aligned in the center */
+}
+
+.progress {
+  display: flex; 
+  align-items: center; /* This ensures the button icon and the text are vertically aligned in the center */
+  gap: 10px; /* You can adjust this value for spacing between the button and the text */
+}
+
+.button-back {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  appearance: button;
+  backface-visibility: hidden;
+  background-color: #28a745;
+  border-radius: 6px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-size: 80%;
+  height: 25px;
+  line-height: 1.15;
+  margin-bottom: 0px;
+  outline: none;
+  overflow: hidden;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transform: translateZ(0);
+  transition: all .2s,box-shadow .08s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 25px !important;
+}

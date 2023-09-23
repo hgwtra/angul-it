@@ -1,7 +1,16 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <main class="main">
   <div class="main-content responsive-wrapper">
     <article class="widget">
-      <h2>Captcha #3: Image</h2>
+      <div class="captchaTitle">
+				<h2>Captcha #2: Text</h2>
+				<div class="progress">
+					<button type="button" class="button-back" (click)="onBackClicked()">
+						<i class="fa-solid fa-arrow-left"></i>
+					</button>
+					<h2>3/3</h2>
+				</div>
+			</div>
       <p>Click the picture that has an Angular logo and click submit.</p>
       <form [formGroup]="imageFormGroup" (ngSubmit)="onSubmit()">
         <div class="grid-container">
@@ -18,9 +27,6 @@
         <div class="submit-button-container">
           <button type="submit" [disabled]="isSubmitted || !selectedImage"  class="btn btn-primary">Submit</button>
         </div>
-        <button class="btn btn-primary" (click)="onBackClicked()">Back</button>
-
-
         <div *ngIf="imageValidated === false">
             <p> Incorrect! Try again... </p>
             <button class="button-9" (click)="retry()">Try again</button>

@@ -109,4 +109,13 @@ export class ImageComponent {
     this.nextCaptchaView = 'text';
     this.clickedNextButton.emit(this.nextCaptchaView);
   }
+  
+  @Output()
+  clickedRestartButton: EventEmitter<string> = new EventEmitter<string>();
+
+  clickedRestart: string = 'home';
+
+  onRestart(){
+    this.clickedRestartButton.emit(this.clickedRestart);
+  }
 }
