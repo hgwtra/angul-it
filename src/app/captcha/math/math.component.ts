@@ -22,10 +22,10 @@ export class MathComponent  {
   initForm() {
     this.mathFormGroup = new FormGroup(
       {
-        firstNumber: new FormControl({ value: this.randomNumber(), disabled: true }, [
+        firstNumber: new FormControl(this.randomNumber(), [
           Validators.required
         ]),
-        secondNumber: new FormControl({ value: this.randomNumber(), disabled: true }, [
+        secondNumber: new FormControl(this.randomNumber(), [
           Validators.required
         ]),
         answer: new FormControl("")
@@ -34,7 +34,7 @@ export class MathComponent  {
     );
   }
   answerValidator(form: AbstractControl) {
-    console.log( form.value);
+    console.log(form.value);
     const { firstNumber, secondNumber, answer } = form.value;
     if (+answer === parseInt(firstNumber) + parseInt(secondNumber)) {
       return null;
