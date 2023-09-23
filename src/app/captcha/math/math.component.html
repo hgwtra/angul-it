@@ -1,4 +1,6 @@
 <!-- Math Captcha -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 <main class="main">
 	<div class="main-content responsive-wrapper">
 		<article class="widget">
@@ -7,28 +9,44 @@
 			<p>Click submit button to check your answer. Good luck!</p>
 
 			<div class="container">
-				<div class="row">
-				 <div class="col-md-6">
-				  <form [formGroup]="mathFormGroup">
-				   <div class="form-group">
-					<p
+				<form [formGroup]="mathFormGroup" (ngSubmit)="onSubmit()">
+					<div class="equation">
+						<canvas #canvas width="130" height="60" 
 						class="form-control-static">
 						{{ mathFormGroup.get('firstNumber').value }} +  {{ mathFormGroup.get('secondNumber').value }}
-					</p>
-				   </div>
-					 <div class="form-group">
-					  <input type="number" class="form-control"
-						 formControlName="answer"
-						 id="answer" >
-				   </div>
-					  <button type="submit" [disabled]="!mathFormGroup.valid"class="btn btn-primary">Submit</button>
-					 <button class="button-9">Next</button>
-				  </form>
-				 </div>
-				</div>
-			   </div>
-			<p></p>
+						</canvas>
+						<button type="button" class="button-re" (click)="onRefreshButtonClicked()">
+							<i class="fa-sharp fa-solid fa-rotate-right"></i>
+						</button>						
+					</div>
 
+					<div class="form-input">
+						<input type="text" class="form-control"
+							formControlName="answer"
+							id="answer" 
+							[maxlength]="3"
+							[disabled]="mathValidated === false"
+							(keydown)="preventEnter($event)">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+
+					<div *ngIf="mathValidated === false">
+						<p> Incorrect! Try again... </p>
+						<button class="button-9" (click)="retry()">Try again</button> 
+					</div>
+					  
+					<div *ngIf="mathValidated === true">
+					<p> Correct! Let's move on </p>
+					<div class="buttons">
+						<button class="button-9" (click)="retry()">Redo Challenge</button> 
+						<button class="button-9">Next</button> 
+					</div>
+					</div>
+				</form>
+			</div>
+
+
+           
 		</article>
     </div>
 </main>
