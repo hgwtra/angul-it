@@ -13,4 +13,14 @@ export class AppComponent {
     this.view = value;
     console.log(value);
   }
+
+  handleResultClicked2(value: boolean) {
+    this.view = 'result';
+    //console.log("here");
+  }
+
+  handleRestartButton(value: string) {
+    this.view = 'home';
+    //console.log("here");
+  }
 }

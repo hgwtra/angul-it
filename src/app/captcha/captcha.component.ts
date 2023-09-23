@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-captcha',
@@ -13,4 +13,16 @@ export class CaptchaComponent {
     this.captchaView = value;
     console.log(value);
   }
+
+
+  @Output() resultClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
+  isResultClicked: boolean = false;
+
+  handleResultClicked(value: boolean) {
+    this.isResultClicked = value;
+    this.resultClicked.emit(this.isResultClicked); 
+    console.log(value);
+  }
+
 }
+  

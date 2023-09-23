@@ -12,7 +12,10 @@
         <app-home (clickedBeginButton) ="onBeginButtonClicked($event)"></app-home>
       </div>
       <div *ngSwitchCase="'captcha'">
-        <app-captcha></app-captcha>
+        <app-captcha (resultClicked)="handleResultClicked2($event)"></app-captcha>
+      </div>
+      <div *ngSwitchCase="'result'">
+        <app-result (clickedRestartButton)="handleRestartButton($event)"></app-result>
       </div>
   </div>
 </body>

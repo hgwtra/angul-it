@@ -6,6 +6,7 @@
     <app-text (clickedNextButton)="onNextClicked($event)"></app-text>
   </div>
   <div *ngSwitchCase="'image'">
-    <app-image (clickedNextButton)="onNextClicked($event)"></app-image>
+    <app-image (clickedNextButton)="onNextClicked($event)"
+              (ResultClicked)="handleResultClicked($event)"></app-image>
   </div>
 </div>

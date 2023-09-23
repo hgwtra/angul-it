@@ -105,17 +105,17 @@ export class ImageComponent {
     this.isSubmitted = false;
     this.imageFormGroup.get('answer').enable()
   }
+
   onBackClicked() {
     this.nextCaptchaView = 'text';
     this.clickedNextButton.emit(this.nextCaptchaView);
   }
+
+  @Output() ResultClicked = new EventEmitter<boolean>();
+  resultIsClicked: boolean = false;
   
-  @Output()
-  clickedRestartButton: EventEmitter<string> = new EventEmitter<string>();
-
-  clickedRestart: string = 'home';
-
-  onRestart(){
-    this.clickedRestartButton.emit(this.clickedRestart);
+  onResultClicked() {
+    this.resultIsClicked = true;
+    this.ResultClicked.emit(this.resultIsClicked);
   }
 }
