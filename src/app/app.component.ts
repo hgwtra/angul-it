@@ -1,26 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CaptchaStateService } from "./captcha-state.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  view: string = 'home';
+export class AppComponent implements OnInit {
 
+  view: 'home' | 'captcha' | 'result';
 
-  onBeginButtonClicked(value: string){
-    this.view = value;
-    console.log(value);
+  constructor(private captchaStateService: CaptchaStateService) {}
+
+  ngOnInit() {
+    // Load the current view from the service and set the component's view
+    this.captchaStateService.loadStateFromLocalStorage();
+    this.view = this.captchaStateService.getCurrentView();
+  }
+
+  onBeginButtonClicked(value: string) {
+    this.view = value as any; // since the type of `value` is string, we're doing a type assertion here
   }
 
   handleResultClicked2(value: boolean) {
     this.view = 'result';
-    //console.log("here");
   }
 
   handleRestartButton(value: string) {
     this.view = 'home';
-    //console.log("here");
   }
 }

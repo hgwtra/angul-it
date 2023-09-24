@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Captcha Challenge</title>
-</head>
-<body>
-  <app-header></app-header>
-    <div [ngSwitch]="view">
-      <div *ngSwitchCase="'home'">
-        <app-home (clickedBeginButton) ="onBeginButtonClicked($event)"></app-home>
-      </div>
-      <div *ngSwitchCase="'captcha'">
-        <app-captcha (resultClicked)="handleResultClicked2($event)"></app-captcha>
-      </div>
-      <div *ngSwitchCase="'result'">
-        <app-result (clickedRestartButton)="handleRestartButton($event)"></app-result>
-      </div>
-  </div>
-</body>
-</html>
+<app-header></app-header>
+
+<!-- Switch based on the value of 'view' -->
+<ng-container [ngSwitch]="view">
+  <!-- Home View -->
+  <app-home *ngSwitchCase="'home'"
+            (clickedBeginButton)="onBeginButtonClicked($event)">
+  </app-home>
+  
+  <!-- Captcha View -->
+  <app-captcha *ngSwitchCase="'captcha'"
+               (resultClicked)="handleResultClicked2($event)">
+  </app-captcha>
+  
+  <!-- Result View -->
+  <app-result *ngSwitchCase="'result'"
+              (clickedRestartButton)="handleRestartButton($event)">
+  </app-result>
+</ng-container>

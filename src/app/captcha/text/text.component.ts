@@ -1,19 +1,23 @@
-import {Component, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
+import {Component, ViewChild, ElementRef, Output, EventEmitter, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
-import {CaptchaStateService} from "../../captcha-state.service";
+import { CaptchaStateService } from '../../captcha-state.service';
 
 @Component({
   selector: 'app-text',
   templateUrl: './text.component.html',
   styleUrls: ['./text.component.css']
 })
-export class TextComponent {
+export class TextComponent implements OnInit {
+
+  ngOnInit(): void {
+    this.captchaStateService.loadStateFromLocalStorage();
+    this.captchaStateService.setCurrentCaptchaView('text');
+    this.captchaStateService.saveStateToLocalStorage();
+  }
 
   textValidated: boolean | null = null;  // true = correct, false = incorrect, null = not yet validated
   isSubmitted = false;
   nextCaptchaView: string = '';
-  @Output()
-  clickedNextButton: EventEmitter<string> = new EventEmitter<string>();
 
   //Canvas
   @ViewChild('canvas') canvas: ElementRef;
@@ -28,8 +32,9 @@ export class TextComponent {
   }
 
   isCaptcha2Passed() {
-    return this.captchaStateService.isCaptcha2Passed();
+    return this.captchaStateService.isCaptcha2Passed(); 
   }
+
   randomAlphaNumeric = (n: number): string => {
     // Choose characters randomly from this string
     const alphaNumericString =
@@ -50,6 +55,7 @@ export class TextComponent {
 
     return sb.join("");
   };
+
   initForm() {
     this.textFormGroup = new FormGroup(
       {
@@ -62,9 +68,8 @@ export class TextComponent {
     );
   }
 
-
   answerValidator(form: AbstractControl) {
-    //console.log(form.value);
+    console.log(form.value);
     const { randomAlphanumericText, answer } = form.value;
     if (answer === randomAlphanumericText) {
       return null;
@@ -114,7 +119,7 @@ export class TextComponent {
         ctx.lineWidth = 1;  // Line width
         ctx.stroke();
     }
-}
+  }
 
   // Helper function to get a random integer between min and max
   getRandomInt(min: number, max: number): number {
@@ -126,10 +131,12 @@ export class TextComponent {
 
     if (this.textFormGroup.valid && !this.textFormGroup.hasError('math')) {
         this.textValidated = true;
-        if (this.textValidated) {
-          this.onCaptcha2Success();
-          //console.log("Captcha 2 passed:" + this.captchaStateService.isCaptcha2Passed());
-        }
+         // Check if this is a successful completion and call onCaptcha1Success
+      if (this.textValidated) {
+        this.onCaptcha2Success();
+        //console.log("Captcha 1 passed:" + this.captchaStateService.isCaptcha1Passed());
+      }
+      this.captchaStateService.saveStateToLocalStorage()
     } else {
         this.textValidated = false;
     }
@@ -152,7 +159,8 @@ export class TextComponent {
     this.textFormGroup.get('answer').enable()
   }
 
-
+  @Output()
+  clickedNextButton: EventEmitter<string> = new EventEmitter<string>();
   onNextClicked() {
     this.nextCaptchaView = 'image';
     this.clickedNextButton.emit(this.nextCaptchaView);
@@ -162,5 +170,4 @@ export class TextComponent {
     this.nextCaptchaView = 'math';
     this.clickedNextButton.emit(this.nextCaptchaView);
   }
-
 }

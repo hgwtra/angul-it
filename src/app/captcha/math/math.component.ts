@@ -1,4 +1,5 @@
-import { Component, ViewChild, ElementRef, EventEmitter, Output} from '@angular/core';
+import { Component, ViewChild, ElementRef, EventEmitter, Output, OnInit} from '@angular/core';
+
 import { CaptchaStateService } from '../../captcha-state.service';
 
 
@@ -15,7 +16,15 @@ import {
   styleUrls: ['./math.component.css'],
 })
 
-export class MathComponent  {
+export class MathComponent implements OnInit {
+
+  ngOnInit(): void {
+    this.captchaStateService.loadStateFromLocalStorage();
+    this.captchaStateService.setCurrentCaptchaView('math');
+    this.captchaStateService.saveStateToLocalStorage();
+  }
+
+
   //Canvas
   @ViewChild('canvas') canvas: ElementRef;
 
@@ -34,7 +43,7 @@ export class MathComponent  {
   }
 
   isCaptcha1Passed() {
-    return this.captchaStateService.isCaptcha1Passed();
+    return this.captchaStateService.isCaptcha1Passed(); 
   }
 
 
@@ -121,6 +130,7 @@ export class MathComponent  {
         this.onCaptcha1Success();
         //console.log("Captcha 1 passed:" + this.captchaStateService.isCaptcha1Passed());
       }
+          this.captchaStateService.saveStateToLocalStorage();
     } else if (this.mathFormGroup.errors && this.mathFormGroup.errors['math']) {
       this.mathValidated = false;
     }

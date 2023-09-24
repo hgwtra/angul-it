@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { CaptchaStateService } from '../captcha-state.service';
 
 @Component({
   selector: 'app-captcha',
@@ -6,14 +7,21 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./captcha.component.css']
 })
 
-export class CaptchaComponent {
+export class CaptchaComponent implements OnInit {
+
+  ngOnInit(): void {
+    this.captchaStateService.loadStateFromLocalStorage();
+    this.captchaView = this.captchaStateService.getCurrentCaptchaView();
+  }
+
   captchaView: string = 'math';
+
+  constructor(private captchaStateService: CaptchaStateService) {}
 
   onNextClicked(value: string){
     this.captchaView = value;
     //console.log(value);
   }
-
 
   @Output() resultClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
   isResultClicked: boolean = false;
@@ -23,6 +31,5 @@ export class CaptchaComponent {
     this.resultClicked.emit(this.isResultClicked);
     //console.log(value);
   }
-
 }
 

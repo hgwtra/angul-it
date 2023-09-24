@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output, OnInit} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {CaptchaStateService} from "../../captcha-state.service";
 
@@ -7,8 +7,14 @@ import {CaptchaStateService} from "../../captcha-state.service";
   templateUrl: './image.component.html',
   styleUrls: ['./image.component.css']
 })
-export class ImageComponent {
+export class ImageComponent implements OnInit {
 
+  ngOnInit(): void {
+    this.captchaStateService.getCurrentCaptchaView();
+    this.captchaStateService.loadStateFromLocalStorage();
+    this.captchaStateService.setCurrentCaptchaView('image');
+    this.captchaStateService.saveStateToLocalStorage();
+  }
   imageValidated: boolean | null = null;
   isSubmitted = false;
   nextCaptchaView: string = '';
@@ -102,6 +108,7 @@ export class ImageComponent {
           this.onCaptcha3Success();
         //console.log("Captcha 3 passed:" + this.captchaStateService.isCaptcha3Passed());
       }
+      this.captchaStateService.saveStateToLocalStorage()
     } else {
         this.imageValidated = false;
     }
