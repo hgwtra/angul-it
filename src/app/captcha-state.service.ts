@@ -78,22 +78,29 @@ export class CaptchaStateService {
           captcha3: this.captcha3Passed
       }
     };
-    localStorage.setItem('captchaState', JSON.stringify(state));
+    const jsonString = JSON.stringify(state);
+    const base64String = btoa(jsonString); // Encode as Base64
+    localStorage.setItem('captchaState', base64String);
 }
 
 
-  // This method will load the state from localStorage
-  loadStateFromLocalStorage() {
-    const savedState = localStorage.getItem('captchaState');  // Use 'captchaState' consistently
-    if (savedState) {
-      const parsedState: AppState = JSON.parse(savedState);
-      this.currentView = parsedState.view || 'home'; // default to 'home' if no view is stored
-      this.currentCaptchaView = parsedState.captchaView || 'math'; // default to 'math' if no view is stored
-      this.captcha1Passed = parsedState.captchaStatus.captcha1 || false;
-      this.captcha2Passed = parsedState.captchaStatus.captcha2 || false;
-      this.captcha3Passed = parsedState.captchaStatus.captcha3 || false;
-    }
+// Load the state from localStorage
+loadStateFromLocalStorage() {
+  const savedBase64State = localStorage.getItem('captchaState'); // Get the Base64-encoded state
+  if (savedBase64State) {
+    // Decode the Base64 string
+    const jsonString = atob(savedBase64State);
+
+    // Parse the JSON string
+    const parsedState: AppState = JSON.parse(jsonString);
+
+    this.currentView = parsedState.view || 'home';
+    this.currentCaptchaView = parsedState.captchaView || 'math';
+    this.captcha1Passed = parsedState.captchaStatus.captcha1 || false;
+    this.captcha2Passed = parsedState.captchaStatus.captcha2 || false;
+    this.captcha3Passed = parsedState.captchaStatus.captcha3 || false;
   }
+}
 
   // This method can be used to initialize or update the service's state from loaded AppState
   initializeFromState(state: AppState) {
