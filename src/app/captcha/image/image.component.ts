@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
+import {CaptchaStateService} from "../../captcha-state.service";
 
 @Component({
   selector: 'app-image',
@@ -27,12 +28,19 @@ export class ImageComponent {
   correctImagePath: string = "./assets/images/answer.jpg";
 
   imageFormGroup: FormGroup;
-  constructor() {
+  constructor(private captchaStateService: CaptchaStateService) {
     // Shuffle the imagePaths array randomly
     this.initForm();
     this.shuffleArray(this.imagePaths);
   }
 
+  onCaptcha3Success() {
+    this.captchaStateService.setCaptcha3Passed(true);
+  }
+
+  isCaptcha3Passed() {
+    return this.captchaStateService.isCaptcha3Passed();
+  }
   // Function to shuffle an array randomly
   private shuffleArray(array: any[]) {
     let currentIndex = array.length, randomIndex, temporaryValue;
@@ -90,10 +98,13 @@ export class ImageComponent {
 
     if (this.imageFormGroup.valid && !this.imageFormGroup.hasError('math')) {
         this.imageValidated = true;
+        if (this.imageValidated) {
+          this.onCaptcha3Success();
+        //console.log("Captcha 3 passed:" + this.captchaStateService.isCaptcha3Passed());
+      }
     } else {
         this.imageValidated = false;
     }
-
     // Disable the answer input after form submission
     this.imageFormGroup.get('answer').disable();
   }

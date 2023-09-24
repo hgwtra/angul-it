@@ -10,10 +10,12 @@
 						<i class="fa-solid fa-arrow-left"></i>
 					</button>
 					<h2>2/3</h2>
-          <button type="button" class="button-back">
-						<i class="fa-solid fa-arrow-right"></i>
-					</button>
-				</div>
+          <div *ngIf="isCaptcha2Passed()">
+            <button type="button" class="button-back" (click)="onNextClicked()">
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+          </div>
+        </div>
 			</div>
       <p>Enter the characters you see and click submit.</p>
       <div class="container">

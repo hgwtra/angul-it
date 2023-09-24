@@ -11,7 +11,7 @@ export class CaptchaComponent {
 
   onNextClicked(value: string){
     this.captchaView = value;
-    console.log(value);
+    //console.log(value);
   }
 
 
@@ -20,9 +20,9 @@ export class CaptchaComponent {
 
   handleResultClicked(value: boolean) {
     this.isResultClicked = value;
-    this.resultClicked.emit(this.isResultClicked); 
-    console.log(value);
+    this.resultClicked.emit(this.isResultClicked);
+    //console.log(value);
   }
 
 }
-  
+

@@ -1,5 +1,6 @@
 import {Component, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
+import {CaptchaStateService} from "../../captcha-state.service";
 
 @Component({
   selector: 'app-text',
@@ -18,8 +19,16 @@ export class TextComponent {
   @ViewChild('canvas') canvas: ElementRef;
 
   textFormGroup: FormGroup;
-  constructor() {
+  constructor(private captchaStateService: CaptchaStateService) {
     this.initForm();
+  }
+
+  onCaptcha2Success() {
+    this.captchaStateService.setCaptcha2Passed(true);
+  }
+
+  isCaptcha2Passed() {
+    return this.captchaStateService.isCaptcha2Passed();
   }
   randomAlphaNumeric = (n: number): string => {
     // Choose characters randomly from this string
@@ -55,7 +64,7 @@ export class TextComponent {
 
 
   answerValidator(form: AbstractControl) {
-    console.log(form.value);
+    //console.log(form.value);
     const { randomAlphanumericText, answer } = form.value;
     if (answer === randomAlphanumericText) {
       return null;
@@ -117,6 +126,10 @@ export class TextComponent {
 
     if (this.textFormGroup.valid && !this.textFormGroup.hasError('math')) {
         this.textValidated = true;
+        if (this.textValidated) {
+          this.onCaptcha2Success();
+          //console.log("Captcha 2 passed:" + this.captchaStateService.isCaptcha2Passed());
+        }
     } else {
         this.textValidated = false;
     }

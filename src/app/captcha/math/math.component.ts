@@ -1,4 +1,6 @@
 import { Component, ViewChild, ElementRef, EventEmitter, Output} from '@angular/core';
+import { CaptchaStateService } from '../../captcha-state.service';
+
 
 import {
   FormGroup,
@@ -22,11 +24,19 @@ export class MathComponent  {
   mathFormGroup: FormGroup;
   captchaView: string = 'math';
 
-
   //Form validation
-  constructor() {
+  constructor(private captchaStateService: CaptchaStateService) {
     this.initForm();
   }
+
+  onCaptcha1Success() {
+    this.captchaStateService.setCaptcha1Passed(true);
+  }
+
+  isCaptcha1Passed() {
+    return this.captchaStateService.isCaptcha1Passed();
+  }
+
 
   //randomize a number
   randomNumber = (min = 1, max = 10) => {
@@ -72,7 +82,10 @@ export class MathComponent  {
             result = firstNumber * secondNumber;
             break;
         default:
-            return { math: true }; // return an error if the operator is not recognized
+            return {
+              math: true
+            }; // return an error if the operator is not recognized
+
     }
 
     if (+answer === result) {
@@ -103,11 +116,15 @@ export class MathComponent  {
     this.isSubmitted = true;
     if (this.mathFormGroup.valid && (!this.mathFormGroup.errors || !this.mathFormGroup.errors['math'])) {
       this.mathValidated = true;
-      this.mathFormGroup.get('answer').disable();
+      // Check if this is a successful completion and call onCaptcha1Success
+      if (this.mathValidated) {
+        this.onCaptcha1Success();
+        //console.log("Captcha 1 passed:" + this.captchaStateService.isCaptcha1Passed());
+      }
     } else if (this.mathFormGroup.errors && this.mathFormGroup.errors['math']) {
       this.mathValidated = false;
-      this.mathFormGroup.get('answer').disable();
     }
+    this.mathFormGroup.get('answer').disable();
   }
 
   retry() {
