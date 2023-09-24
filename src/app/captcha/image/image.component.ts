@@ -7,11 +7,11 @@ import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/form
   styleUrls: ['./image.component.css']
 })
 export class ImageComponent {
+
   imageValidated: boolean | null = null;
   isSubmitted = false;
   nextCaptchaView: string = '';
-  @Output()
-  clickedNextButton: EventEmitter<string> = new EventEmitter<string>();
+
   imagePaths: string[] = [
     "./assets/images/answer.jpg",
     "./assets/images/image2.jpg",
@@ -61,6 +61,7 @@ export class ImageComponent {
       [this.answerValidator] // Bind the validator to the component instance
     );
   }
+
   onImageClicked(imagePath: string) {
     // If the clicked image is already selected, deselect it; otherwise, select the clicked image
     if (this.selectedImage === imagePath) {
@@ -71,7 +72,7 @@ export class ImageComponent {
         this.selectedImage = imagePath;
     }
     console.log(this.selectedImage);
-}
+  }
 
 
   answerValidator(form: AbstractControl) {
@@ -106,6 +107,8 @@ export class ImageComponent {
     this.imageFormGroup.get('answer').enable()
   }
 
+  @Output()
+  clickedNextButton: EventEmitter<string> = new EventEmitter<string>();
   onBackClicked() {
     this.nextCaptchaView = 'text';
     this.clickedNextButton.emit(this.nextCaptchaView);
@@ -113,7 +116,6 @@ export class ImageComponent {
 
   @Output() ResultClicked = new EventEmitter<boolean>();
   resultIsClicked: boolean = false;
-  
   onResultClicked() {
     this.resultIsClicked = true;
     this.ResultClicked.emit(this.resultIsClicked);
