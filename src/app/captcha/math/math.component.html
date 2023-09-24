@@ -20,9 +20,7 @@
 			<div class="container">
 				<form [formGroup]="mathFormGroup" (ngSubmit)="onSubmit()">
 					<div class="equation">
-						<canvas #canvas width="130" height="60"
-						class="form-control-static">
-						{{ mathFormGroup.get('firstNumber').value }} +  {{ mathFormGroup.get('secondNumber').value }}
+						<canvas #canvas width="130" height="60">
 						</canvas>
 						<button type="button" class="button-re" (click)="onRefreshButtonClicked()">
 							<i class="fa-sharp fa-solid fa-rotate-right"></i>

@@ -24,8 +24,6 @@
             <form [formGroup]="textFormGroup" (ngSubmit)="onSubmit()">
               <div class="textRandomizer">
                 <canvas #canvas width="230" height="60">
-                  class="form-control-static">
-                  {{ textFormGroup.get('randomAlphanumericText').value }}
                 </canvas>
                 <button type="button" class="button-re" (click)="onRefreshButtonClicked()">
                   <i class="fa-sharp fa-solid fa-rotate-right"></i>
