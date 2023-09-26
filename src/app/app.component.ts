@@ -12,15 +12,9 @@ export class AppComponent implements OnInit {
 
   constructor(private captchaStateService: CaptchaStateService) {}
 
- ngOnInit() {
+  ngOnInit() {
     // Load the current view from the service and set the component's view
     this.captchaStateService.loadStateFromLocalStorage();
-   //If no current view found, set view
-    if (this.captchaStateService.getCurrentView() === null) {
-      this.captchaStateService.setCurrentView('home');
-      this.captchaStateService.setCurrentCaptchaView('math');
-      this.captchaStateService.saveStateToLocalStorage();
-    }
     this.view = this.captchaStateService.getCurrentView();
   }
 
