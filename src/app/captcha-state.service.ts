@@ -86,6 +86,13 @@ export class CaptchaStateService {
 
 // Load the state from localStorage
 loadStateFromLocalStorage() {
+  // Default values
+  this.currentView = 'home';
+  this.currentCaptchaView = 'math';
+  this.captcha1Passed = false;
+  this.captcha2Passed = false;
+  this.captcha3Passed = false;
+
   const savedBase64State = localStorage.getItem('captchaState'); // Get the Base64-encoded state
   if (savedBase64State) {
     // Decode the Base64 string
@@ -94,11 +101,14 @@ loadStateFromLocalStorage() {
     // Parse the JSON string
     const parsedState: AppState = JSON.parse(jsonString);
 
-    this.currentView = parsedState.view || 'home';
-    this.currentCaptchaView = parsedState.captchaView || 'math';
-    this.captcha1Passed = parsedState.captchaStatus.captcha1 || false;
-    this.captcha2Passed = parsedState.captchaStatus.captcha2 || false;
-    this.captcha3Passed = parsedState.captchaStatus.captcha3 || false;
+    // Overwrite defaults with loaded values if they exist
+    if (parsedState.view) this.currentView = parsedState.view;
+    if (parsedState.captchaView) this.currentCaptchaView = parsedState.captchaView;
+    if (parsedState.captchaStatus) {
+      if (parsedState.captchaStatus.captcha1 !== undefined) this.captcha1Passed = parsedState.captchaStatus.captcha1;
+      if (parsedState.captchaStatus.captcha2 !== undefined) this.captcha2Passed = parsedState.captchaStatus.captcha2;
+      if (parsedState.captchaStatus.captcha3 !== undefined) this.captcha3Passed = parsedState.captchaStatus.captcha3;
+    }
   }
 }
 
